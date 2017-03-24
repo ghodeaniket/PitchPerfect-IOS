@@ -28,11 +28,6 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
 
     @IBAction func recordAudio(_ sender: Any) {
         configureUI(.recording)
@@ -63,7 +58,12 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
         if flag {
             performSegue(withIdentifier: "stopRecording", sender: audioRecorder.url)
         } else {
-            print("Recording was not successful.")
+            let alertController = UIAlertController(title: "Error", message: "Recording was not successful", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "Ok", style: .default, handler: { alertAction in
+                self.dismiss(animated: true, completion: nil)
+            })
+            alertController.addAction(okAction)
+            present(alertController, animated: true, completion: nil)
         }
     }
     
@@ -86,7 +86,6 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
             stopRecordingButton.isEnabled = true
             recordingButton.isEnabled = false
         }
-        
     }
 }
 
